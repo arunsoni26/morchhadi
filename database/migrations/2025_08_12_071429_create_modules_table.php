@@ -24,7 +24,6 @@ return new class extends Migration
             ['id' => 2, 'name' => 'Permissions', 'slug' => 'permissions', 'created_at' => now(), 'updated_at' => now()],
             ['id' => 3, 'name' => 'Users', 'slug' => 'users', 'created_at' => now(), 'updated_at' => now()],
             ['id' => 4, 'name' => 'Customers', 'slug' => 'customers', 'created_at' => now(), 'updated_at' => now()],
-            ['id' => 5, 'name' => 'Customer Docs', 'slug' => 'customer_docs', 'created_at' => now(), 'updated_at' => now()],
         ]);
     }
 

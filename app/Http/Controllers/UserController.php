@@ -22,7 +22,7 @@ class UserController extends Controller
 
         // Filters
         if ($request->role_id) {
-            $query->where('group_id', $request->group_id);
+            $query->where('role_id', $request->role_id);
         }
         if ($request->status !== null && $request->status !== '') {
             $query->where('status', $request->status);
