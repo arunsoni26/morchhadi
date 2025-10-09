@@ -76,10 +76,16 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
 });
 
 //Frontend
-// Route::get('/', [FrontendController::class, 'home'])->name('homepage');
+// // Route::get('/', [FrontendController::class, 'home'])->name('homepage');
+// Route::get('/homepage', [FrontendController::class, 'home'])->name('homepage');
+// Route::get('/news', [FrontendController::class, 'news'])->name('news');
+// Route::get('/banners', [FrontendController::class, 'banners'])->name('banners');
+// Route::get('/news/load-more', [FrontendController::class, 'loadMore'])->name('news.loadMore');
+// Route::get('/gallery/load-more', [FrontendController::class, 'bannerloadMore'])->name('gallery.loadMore');
+// Route::get('/news/{id}', [FrontendController::class, 'show'])->name('news.show');
+
 Route::get('/homepage', [FrontendController::class, 'home'])->name('homepage');
-Route::get('/news', [FrontendController::class, 'news'])->name('news');
-Route::get('/banners', [FrontendController::class, 'banners'])->name('banners');
-Route::get('/news/load-more', [FrontendController::class, 'loadMore'])->name('news.loadMore');
-Route::get('/gallery/load-more', [FrontendController::class, 'bannerloadMore'])->name('gallery.loadMore');
-Route::get('/news/{id}', [FrontendController::class, 'show'])->name('news.show');
+Route::get('/about', [FrontendController::class, 'about'])->name('about');
+Route::get('/products', [FrontendController::class, 'products'])->name('products');
+Route::get('/services', [FrontendController::class, 'services'])->name('services');
+Route::get('/shops', [FrontendController::class, 'shops'])->name('shops');
