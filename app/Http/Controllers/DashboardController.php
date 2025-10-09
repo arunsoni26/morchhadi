@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Customer;
-use App\Models\CustomerDocument;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -41,50 +40,12 @@ class DashboardController extends Controller
             // Only this customer's records
             $customers = Customer::where('id', $user->customer->id)->get();
             $users = collect(); // no need to show other users
-
-            $customerActiveDocs = DB::table('customer_documents')
-                ->join('customers', 'customers.id', '=', 'customer_documents.customer_id')
-                ->where('customer_documents.customer_id', $user->customer->id)
-                ->where('customers.status', 1)
-                ->whereNull('customer_documents.deleted_at')
-                ->select('customer_documents.*')
-                ->get();
-
-            $customerInActiveDocs = DB::table('customer_documents')
-                ->join('customers', 'customers.id', '=', 'customer_documents.customer_id')
-                ->where('customer_documents.customer_id', $user->customer->id)
-                ->where('customers.status', 0)
-                ->whereNull('customer_documents.deleted_at')
-                ->select('customer_documents.*')
-                ->get();
-
-            $customerDeleteDocs = DB::table('customer_documents')
-                ->where('customer_id', $user->customer->id)
-                ->whereNotNull('deleted_at')
-                ->get();
         }
+
         // Case: admin/superadmin
         else {
             $customers = Customer::all();
             $users = User::where('role_id', 2)->get();
-
-            $customerActiveDocs = DB::table('customer_documents')
-                ->join('customers', 'customers.id', '=', 'customer_documents.customer_id')
-                ->where('customers.status', 1)
-                ->whereNull('customer_documents.deleted_at')
-                ->select('customer_documents.*')
-                ->get();
-
-            $customerInActiveDocs = DB::table('customer_documents')
-                ->join('customers', 'customers.id', '=', 'customer_documents.customer_id')
-                ->where('customers.status', 0)
-                ->whereNull('customer_documents.deleted_at')
-                ->select('customer_documents.*')
-                ->get();
-
-            $customerDeleteDocs = DB::table('customer_documents')
-                ->whereNotNull('deleted_at')
-                ->get();
         }
 
         // Date filter (common for all roles)
@@ -102,34 +63,15 @@ class DashboardController extends Controller
             $dates[$date->format('Y-m-d')] = 0; 
         }
 
-        $uploads = DB::table('customer_documents') 
-            ->select(DB::raw('DATE(created_at) as date'), DB::raw('COUNT(*) as total'))
-            ->when($roleSlug === 'customer', function ($query) use ($user) {
-                $query->where('customer_id', $user->customer->id);
-            })
-            ->whereBetween(DB::raw('DATE(created_at)'), [$startDate, $endDate])
-            ->groupBy('date')
-            ->pluck('total', 'date')
-            ->toArray();
+        $documentsPerDay = [];
 
-        foreach ($uploads as $date => $count) {
-            $dates[$date] = $count;
-        }
-
-        $documentsPerDay = collect($dates)->map(function ($total, $date) {
-            return ['date' => $date, 'total' => $total];
-        })->values();
-
-        $activeCount = $customerActiveDocs->count();
-        $inactiveCount = $customerInActiveDocs->count();
-        $deletedCount = $customerDeleteDocs->count();
+        $activeCount = 0;
+        $inactiveCount = 0;
+        $deletedCount = 0;
 
         return view('admin.dashboard', compact(
             'customers',
             'users',
-            'customerActiveDocs',
-            'customerInActiveDocs',
-            'customerDeleteDocs',
             'documentsPerDay',
             'startDate',
             'endDate',

@@ -62,87 +62,6 @@
                     </div>
                 </div>
                 @endif
-                <div class="col-sm-3">
-                    <div class="card zoom-item">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col mt-0">
-                                    <h5 class="card-title">Customer Active Docs</h5>
-                                </div>
-
-                                <div class="col-auto">
-                                    <div class="stat text-primary">
-                                        <i class="align-middle" data-feather="file"></i>
-                                    </div>
-                                </div>
-                            </div>
-                            <h1 class="mt-1 mb-3">{{ $customerActiveDocs->count() }}</h1>
-                            <div class="mb-0">
-                                @php
-                                $route = route('admin.customers.index');
-                                if (auth()->user()->role->slug == 'customer') {
-                                $route = url('admin/customers/'.auth()->user()->customer->id.'/docs');
-                                }
-                                @endphp
-                                <a class="w-100 btn btn-sm btn-primary" href="{{ $route }}">View <i class="fas fa-link"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-3">
-                    <div class="card zoom-item">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col mt-0">
-                                    <h5 class="card-title">Customer Inactive Docs</h5>
-                                </div>
-
-                                <div class="col-auto">
-                                    <div class="stat text-primary">
-                                        <i class="align-middle" data-feather="file"></i>
-                                    </div>
-                                </div>
-                            </div>
-                            <h1 class="mt-1 mb-3">{{ $customerInActiveDocs->count() }}</h1>
-                            <div class="mb-0">
-                                @php
-                                $route = route('admin.customers.index');
-                                if (auth()->user()->role->slug == 'customer') {
-                                $route = url('admin/customers/'.auth()->user()->customer->id.'/docs');
-                                }
-                                @endphp
-                                <a class="w-100 btn btn-sm btn-primary" href="{{ $route }}">View <i class="fas fa-link"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-3">
-                    <div class="card zoom-item">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col mt-0">
-                                    <h5 class="card-title">Customer Deleted Docs</h5>
-                                </div>
-
-                                <div class="col-auto">
-                                    <div class="stat text-primary">
-                                        <i class="align-middle" data-feather="file"></i>
-                                    </div>
-                                </div>
-                            </div>
-                            <h1 class="mt-1 mb-3">{{ $customerDeleteDocs->count() }}</h1>
-                            <div class="mb-0">
-                                @php
-                                $route = route('admin.customers.index');
-                                if (auth()->user()->role->slug == 'customer') {
-                                $route = url('admin/customers/'.auth()->user()->customer->id.'/docs');
-                                }
-                                @endphp
-                                <a class="w-100 btn btn-sm btn-primary" href="{{ $route }}">View <i class="fas fa-link"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 @if(in_array(auth()->user()->role->slug, ['superadmin']))
                 <div class="col-sm-3">
                     <div class="card zoom-item">
@@ -207,8 +126,8 @@
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         // Prepare labels and data
-        const dates = @json($documentsPerDay -> pluck('date'));
-        const totals = @json($documentsPerDay -> pluck('total'));
+        const dates = [];
+        const totals = [];
 
         const donutData = totals.map(val => val === 0 ? 0.01 : val);
         
