@@ -1,0 +1,85 @@
+<?php
+
+use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\FrontendController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RolePermissionController;
+use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\DashboardController;
+
+Route::get('/', function () {
+    return redirect('login');
+});
+
+Auth::routes();
+
+Route::get('/home', [HomeController::class, 'index'])->name('home');
+
+Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
+    Route::middleware(['auth'])->group(function () {
+        Route::get('dashboard', action: [DashboardController::class, 'index'])->name('dashboard');
+
+        Route::get('/profile', [ProfileController::class, 'index'])->name('profile')->middleware('permission:profile,can_view');
+        Route::post('/settings/update', [ProfileController::class, 'updateProfile'])->name('settings.update')->middleware('permission:profile,can_edit');
+        Route::post('/settings/password', [ProfileController::class, 'updatePassword'])->name('settings.password')->middleware('permission:profile,can_edit');
+
+        //news
+        Route::middleware(['role.superadmin'])->group(function () {            
+            // roles & permissions
+            Route::get('role-permissions', [RolePermissionController::class, 'index'])->name('role-permissions')->middleware('permission:permissions,can_view');
+            Route::post('role-permission-form', [RolePermissionController::class, 'rolePermissionForm'])->name('role-permission-form')->middleware('permission:permissions,can_add');
+            Route::post('update-role-permission', [RolePermissionController::class, 'update'])->name('update-role-permission')->middleware('permission:permissions,can_add');
+            Route::get('role/{id}/permissions', [RolePermissionController::class, 'getPermissions'])->name('role.get-permissions')->middleware('permission:permissions,can_view');
+            
+            // user permissions
+            Route::post('user-permission-form', [UserController::class, 'userPermissionForm'])->name('user-permission-form')->middleware('permission:permissions,can_add');
+            Route::post('update-user-permission', [UserController::class, 'updatePermission'])->name('update-user-permission')->middleware('permission:permissions,can_add');
+            
+        });
+        
+        // Users Module
+        Route::prefix('users')->name('users.')->group(function () {
+            Route::get('/', [App\Http\Controllers\UserController::class,'index'])->name('index')->middleware('permission:users,can_view');
+            Route::any('/list', [App\Http\Controllers\UserController::class,'list'])->name('list')->middleware('permission:users,can_view'); // Ajax JSON
+            Route::post('/form', [App\Http\Controllers\UserController::class,'form'])->name('form')->middleware('permission:users,can_add');
+            Route::post('/save', [App\Http\Controllers\UserController::class,'save'])->name('save')->middleware('permission:users,can_add');
+            Route::post('/toggle-status/{id}', [App\Http\Controllers\UserController::class,'toggleStatus'])->name('toggle-status')->middleware('permission:users,can_edit');
+            Route::any('/duri: elete/{id}', [App\Http\Controllers\UserController::class,'destroy'])->name('delete')->middleware('permission:users,can_edit');
+        });
+
+        Route::middleware(['permission:customers,can_view'])->group(function () {
+            Route::group(['prefix' => 'customers', 'as' => 'customers.'], function () {
+                Route::get('/', [CustomerController::class, 'index'])->name('index');
+                Route::any('/list', [CustomerController::class, 'list'])->name('list');
+                Route::get('/create', [CustomerController::class, 'create'])->name('create')->middleware('permission:customers,can_add');
+                Route::post('/store', [CustomerController::class, 'store'])->name('store')->middleware('permission:customers,can_add');
+                Route::get('/edit/{id}', [CustomerController::class, 'edit'])->name('edit')->middleware('permission:customers,can_edit');
+                Route::post('/update/{id}', [CustomerController::class, 'update'])->name('update')->middleware('permission:customers,can_edit');
+                Route::post('/toggle-status/{id}', [CustomerController::class, 'toggleStatus'])->name('toggle-status')->middleware('permission:customers,can_edit');
+                Route::post('/toggle-dashboard/{id}', [CustomerController::class, 'toggleDashboard'])->name('toggle-dashboard')->middleware('permission:customers,can_edit');
+                // Customer form load (Add / Edit)
+                Route::post('form', [CustomerController::class, 'form'])->name('form')->middleware('permission:customers,can_edit');
+
+                // Customer save (Add / Edit)
+                Route::post('save', [CustomerController::class, 'save'])->name('save')->middleware('permission:customers,can_edit');
+
+                Route::any('/view', [CustomerController::class, 'view'])->name('view')->middleware('permission:customers,can_view');
+
+                // download customers list
+                Route::any('/download-customers', [CustomerController::class, 'downloadCustomers'])->name('download-customers')->middleware('permission:customers,can_view');
+            });
+        });
+    });
+    
+});
+
+//Frontend
+// Route::get('/', [FrontendController::class, 'home'])->name('homepage');
+Route::get('/homepage', [FrontendController::class, 'home'])->name('homepage');
+Route::get('/news', [FrontendController::class, 'news'])->name('news');
+Route::get('/banners', [FrontendController::class, 'banners'])->name('banners');
+Route::get('/news/load-more', [FrontendController::class, 'loadMore'])->name('news.loadMore');
+Route::get('/gallery/load-more', [FrontendController::class, 'bannerloadMore'])->name('gallery.loadMore');
+Route::get('/news/{id}', [FrontendController::class, 'show'])->name('news.show');
