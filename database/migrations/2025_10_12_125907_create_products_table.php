@@ -17,7 +17,8 @@ return new class extends Migration
             $table->string('slug')->unique();
             $table->string('sku')->nullable();
             $table->foreignId('category_id')->constrained('product_categories')->onDelete('cascade');
-            $table->foreignId('brand_id')->nullable()->constrained('brands')->onDelete('set null');
+            $table->foreignId('brand_id')->nullable()->constrained('product_brands')->onDelete('set null');
+            $table->foreignId('branch_id')->nullable()->constrained('branches')->onDelete('set null');
             $table->text('short_description')->nullable();
             $table->longText('description')->nullable();
             $table->decimal('price', 10, 2);
