@@ -88,6 +88,13 @@
                     </a>
                 </li>
             @endif
+
+         <li class="sidebar-item {{ request()->routeIs('admin.branches.*') ? 'active' : '' }}">
+            <a class="sidebar-link" href="{{ route('admin.branches.index') }}">
+                <i class="fas fa-code-branch"></i>
+                <span class="align-middle">Branches</span>
+            </a>
+        </li>
         </ul>
     </div>
 </nav>
