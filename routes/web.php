@@ -8,6 +8,8 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\BranchController;
+use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
     return redirect('login');
@@ -49,6 +51,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
             Route::any('/duri: elete/{id}', [App\Http\Controllers\UserController::class,'destroy'])->name('delete')->middleware('permission:users,can_edit');
         });
 
+        //customer module
         Route::middleware(['permission:customers,can_view'])->group(function () {
             Route::group(['prefix' => 'customers', 'as' => 'customers.'], function () {
                 Route::get('/', [CustomerController::class, 'index'])->name('index');
@@ -69,20 +72,23 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
 
                 // download customers list
                 Route::any('/download-customers', [CustomerController::class, 'downloadCustomers'])->name('download-customers')->middleware('permission:customers,can_view');
+
             });
+        });
+
+        //Branches module
+        Route::prefix('branches')->group(function () {
+            Route::get('/', [BranchController::class, 'index'])->name('branches.index');
+            Route::get('/list', [BranchController::class, 'list'])->name('branches.list');
+            Route::post('/form', [BranchController::class, 'form'])->name('branches.form');
+            Route::post('/save', [BranchController::class, 'save'])->name('branches.save');
+            Route::delete('/{id}', [BranchController::class, 'delete'])->name('branches.delete');
         });
     });
     
 });
 
 //Frontend
-// // Route::get('/', [FrontendController::class, 'home'])->name('homepage');
-// Route::get('/homepage', [FrontendController::class, 'home'])->name('homepage');
-// Route::get('/news', [FrontendController::class, 'news'])->name('news');
-// Route::get('/banners', [FrontendController::class, 'banners'])->name('banners');
-// Route::get('/news/load-more', [FrontendController::class, 'loadMore'])->name('news.loadMore');
-// Route::get('/gallery/load-more', [FrontendController::class, 'bannerloadMore'])->name('gallery.loadMore');
-// Route::get('/news/{id}', [FrontendController::class, 'show'])->name('news.show');
 
 Route::get('/homepage', [FrontendController::class, 'home'])->name('homepage');
 Route::get('/about', [FrontendController::class, 'about'])->name('about');
