@@ -71,7 +71,7 @@
         let table = $('#branchesTable').DataTable({
             ajax: {
                 url: "{{ route('admin.branches.list') }}",
-                dataSrc: '', // Important! Use empty string for array
+                dataSrc: '', 
                 data: function(d) {
                     d.branch_type = $('#filterType').val();
                     d.status = $('#filterStatus').val();
@@ -148,7 +148,7 @@
             let id = $(this).data('id');
             if (confirm('Are you sure you want to delete this branch?')) {
                 $.ajax({
-                    url: "{{ url('branches') }}/" + id,
+                    url: "{{ url('admin/branches') }}/" + id,
                     type: 'DELETE',
                     data: {
                         _token: '{{ csrf_token() }}'
