@@ -14,9 +14,9 @@ class Customer extends Model
 	];
     
     protected $fillable = [
-        'name','user_id','gst_name','father_name','pan','pan_doc','client_type_status',
-        'code','mobile_no','email','city','group_id','dob','gst','gst_doc','aadhar','aadhar_doc',
-        'address','status','hide_dashboard', 'password'
+        'name','user_id','gender','mobile','email','city','dob',
+        'status','password', 'state', 'pincode', 'country', 'shipping_address', 'billing_address', 'whatsapp_number',
+        'house_no', 'locality', 'landmark'
     ];
 
     public function user()

@@ -14,19 +14,21 @@
             <tr>
                 <th>#</th>
                 <th>Name</th>
-                <th>GST Name</th>
-                <th>Father's Name</th>
-                <th>PAN</th>
+                <th>Gender</th>
+                <th>Mobile</th>
+                <th>WhatsApp Number</th>
                 <th>Email</th>
-                <th>Mobile Number</th>
-                <th>Status</th>
-                <th>Code</th>
-                <th>Group</th>
-                <th>GST</th>
-                <th>Aadhar</th>
+                <th>City</th>
+                <th>State</th>
+                <th>Pincode</th>
+                <th>Country</th>
                 <th>Date of Birth</th>
-                <th>Address</th>
-                <th>Verified Years</th>
+                <th>House No</th>
+                <th>Locality</th>
+                <th>Landmark</th>
+                <th>Shipping Address</th>
+                <th>Billing Address</th>
+                <th>Status</th>
             </tr>
         </thead>
         <tbody>
@@ -35,34 +37,21 @@
                 <tr>
                     <td>{{ $i++ }}</td>
                     <td>{{ $customer->name }}</td>
-                    <td>{{ $customer->gst_name }}</td>
-                    <td>{{ $customer->father_name }}</td>
-                    <td>{{ $customer->pan }}</td>
+                    <td>{{ ucfirst($customer->gender) }}</td>
+                    <td>{{ $customer->mobile }}</td>
+                    <td>{{ $customer->whatsapp_number }}</td>
                     <td>{{ $customer->email }}</td>
-                    <td>{{ $customer->mobile_no }}</td>
-                    <td>{{ strtoupper($customer->client_type_status) }}</td>
-                    <td>{{ $customer->code }}</td>
-                    <td>{{ $customer->group->name }}</td> {{-- replace with relation if needed --}}
-                    <td>{{ $customer->gst }}</td>
-                    <td>{{ $customer->aadhar }}</td>
+                    <td>{{ $customer->city }}</td>
+                    <td>{{ $customer->state }}</td>
+                    <td>{{ $customer->pincode }}</td>
+                    <td>{{ $customer->country }}</td>
                     <td>{{ $customer->dob ? \Carbon\Carbon::parse($customer->dob)->format('d-m-Y') : '' }}</td>
-                    <td>{{ $customer->address }}</td>
-                    <td>
-                        @if($customer->verifiedYears->count())
-                            @foreach($gstYears as $year)
-                                @php
-                                    $match = $customer->verifiedYears->firstWhere('gst_year_id', $year->id);
-                                @endphp
-                                {{ $year->label }} - 
-                                {{ $match ? ($match->is_verify ? 'Verified' : 'Pending') : 'Pending' }}
-                                <br>
-                            @endforeach
-                        @else
-                            @foreach($gstYears as $year)
-                                {{ $year->label }} - Pending<br>
-                            @endforeach
-                        @endif
-                    </td>
+                    <td>{{ $customer->house_no }}</td>
+                    <td>{{ $customer->locality }}</td>
+                    <td>{{ $customer->landmark }}</td>
+                    <td>{{ $customer->shipping_address }}</td>
+                    <td>{{ $customer->billing_address }}</td>
+                    <td>{{ $customer->status ? 'Active' : 'Inactive' }}</td>
                 </tr>
             @endforeach
         </tbody>

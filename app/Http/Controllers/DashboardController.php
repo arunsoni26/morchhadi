@@ -33,9 +33,9 @@ class DashboardController extends Controller
 
         // Case: customer role
         if ($roleSlug === 'customer') {
-            if ($user->customer->hide_dashboard == 0) {
-                return view('admin.hide-dashboard');
-            }
+            // if ($user->customer->hide_dashboard == 0) {
+            //     return view('admin.hide-dashboard');
+            // }
 
             // Only this customer's records
             $customers = Customer::where('id', $user->customer->id)->get();

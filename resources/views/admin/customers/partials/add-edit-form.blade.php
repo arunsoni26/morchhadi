@@ -14,7 +14,7 @@
     <button type="button" class="btn-close btn-close-primary" data-bs-dismiss="modal" aria-label="Close"></button>
 </div>
 
-<form id="customerForm" novalidate="" enctype="multipart/form-data" >
+<!-- <form id="customerForm" novalidate="" enctype="multipart/form-data" >
     @csrf
     @if(!empty($customer))
         <input type="hidden" name="id" value="{{ $customer->id }}">
@@ -210,6 +210,186 @@
                 <div class="input-group">
                     <span class="input-group-text"><i class="fas fa-location-dot"></i></span>
                     <textarea name="address" rows="2" class="form-control" placeholder="Full Address">{{ $customer->address ?? '' }}</textarea>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="modal-footer bg-light">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            <i class="fas fa-times me-1"></i> Close
+        </button>
+        <button type="submit" id="customerFormSubmit" class="btn btn-success">
+            <i class="fas fa-save me-1"></i> Save
+        </button>
+    </div>
+</form> -->
+
+<form id="customerForm" novalidate="" enctype="multipart/form-data">
+    @csrf
+    @if(!empty($customer))
+        <input type="hidden" name="id" value="{{ $customer->id }}">
+    @endif
+
+    <div class="modal-body">
+        <div class="row g-3">
+
+            {{-- Name --}}
+            <div class="col-md-4">
+                <label class="form-label">Name</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="fas fa-user"></i></span>
+                    <input type="text" name="name" class="form-control" value="{{ $customer->name ?? '' }}" required>
+                </div>
+            </div>
+
+            {{-- Gender --}}
+            <div class="col-md-4">
+                <label class="form-label">Gender</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="fas fa-venus-mars"></i></span>
+                    <select name="gender" class="form-select" required>
+                        <option value="">Select</option>
+                        <option value="male"   @selected(($customer->gender ?? '') === 'male')>Male</option>
+                        <option value="female" @selected(($customer->gender ?? '') === 'female')>Female</option>
+                        <option value="other"  @selected(($customer->gender ?? '') === 'other')>Other</option>
+                    </select>
+                </div>
+            </div>
+
+            {{-- Mobile --}}
+            <div class="col-md-4">
+                <label class="form-label">Phone Number</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                    <input type="tel" name="mobile" class="form-control" value="{{ $customer->mobile ?? '' }}" required>
+                </div>
+            </div>
+
+            {{-- Whatsapp Number --}}
+            <div class="col-md-4">
+                <label class="form-label">Whatsapp Number</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="fas fa-whatsapp"></i></span>
+                    <input type="tel" name="whatsapp_number" class="form-control" value="{{ $customer->whatsapp_number ?? '' }}" required>
+                </div>
+            </div>
+
+            {{-- Email --}}
+            <div class="col-md-4">
+                <label class="form-label">Email</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                    <input type="email" name="email" class="form-control" value="{{ $customer->email ?? '' }}" @if($customer && isset($customer->email)) readonly @else required @endif>
+                </div>
+            </div>
+
+            {{-- Date of Birth --}}
+            <div class="col-md-4">
+                <label class="form-label">Date of Birth</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+                    <input type="date" name="dob" class="form-control" value="{{ (!empty($customer->dob)) ? \Carbon\Carbon::parse($customer->dob)->format('Y-m-d') : '' }}">
+                </div>
+            </div>
+
+            {{-- Password --}}
+            <div class="col-md-4">
+                <label class="form-label">Password</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                    <input type="password" name="password" class="form-control" placeholder="Enter password" @if(!$customer && !isset($customer->id)) required @endif>
+                </div>
+            </div>
+
+            {{-- Confirm Password --}}
+            <div class="col-md-4">
+                <label class="form-label">Confirm Password</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                    <input type="password" name="password_confirmation" class="form-control" placeholder="Confirm password" @if(!$customer && !isset($customer->id)) required @endif>
+                </div>
+            </div>
+
+            {{-- House No --}}
+            <div class="col-md-4">
+                <label class="form-label">House No</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="fas fa-home"></i></span>
+                    <input type="text" name="house_no" class="form-control" value="{{ $customer->house_no ?? '' }}">
+                </div>
+            </div>
+
+            {{-- Locality / Street --}}
+            <div class="col-md-4">
+                <label class="form-label">Locality / Street</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="fas fa-road"></i></span>
+                    <input type="text" name="locality" class="form-control" value="{{ $customer->locality ?? '' }}">
+                </div>
+            </div>
+
+            {{-- Landmark --}}
+            <div class="col-md-4">
+                <label class="form-label">Landmark</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
+                    <input type="text" name="landmark" class="form-control" value="{{ $customer->landmark ?? '' }}">
+                </div>
+            </div>
+
+            {{-- City --}}
+            <div class="col-md-4">
+                <label class="form-label">City</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="fas fa-city"></i></span>
+                    <input type="text" name="city" class="form-control" value="{{ $customer->city ?? '' }}">
+                </div>
+            </div>
+
+            {{-- State --}}
+            <div class="col-md-4">
+                <label class="form-label">State</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="fas fa-flag"></i></span>
+                    <input type="text" name="state" class="form-control" value="{{ $customer->state ?? '' }}">
+                </div>
+            </div>
+
+            {{-- Pincode --}}
+            <div class="col-md-4">
+                <label class="form-label">Pincode</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="fas fa-mail-bulk"></i></span>
+                    <input type="text" name="pincode" class="form-control" value="{{ $customer->pincode ?? '' }}">
+                </div>
+            </div>
+
+            {{-- Country --}}
+            <div class="col-md-4">
+                <label class="form-label">Country</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="fas fa-globe"></i></span>
+                    <input type="text" name="country" class="form-control" value="{{ $customer->country ?? '' }}">
+                </div>
+            </div>
+
+            {{-- Shipping Address --}}
+            <div class="col-md-6">
+                <label class="form-label">Shipping Address</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="fas fa-truck"></i></span>
+                    <textarea name="shipping_address" class="form-control" rows="2">{{ $customer->shipping_address ?? '' }}</textarea>
+                </div>
+            </div>
+
+            {{-- Billing Address --}}
+            <div class="col-md-6">
+                <label class="form-label">Billing Address</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="fas fa-file-invoice"></i></span>
+                    <textarea name="billing_address" class="form-control" rows="2">{{ $customer->billing_address ?? '' }}</textarea>
                 </div>
             </div>
 
