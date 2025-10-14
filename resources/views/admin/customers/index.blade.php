@@ -5,9 +5,9 @@
     <li class="nav-item">
         <a class="nav-link active" data-bs-toggle="tab" href="#customersTab">Customers</a>
     </li>
-    <li class="nav-item">
+    <!-- <li class="nav-item">
         <a class="nav-link" data-bs-toggle="tab" href="#groupsTab">Groups</a>
-    </li>
+    </li> -->
 </ul>
 
 <div class="tab-content mt-3">
@@ -35,26 +35,18 @@
                 <div class="card-body">
                     <!-- Filters Row -->
                     <div class="row g-3 mb-3">
-                        <div class="col-md-3">
-                            <select id="filterGroup" class="form-select form-select-sm shadow-sm">
-                                <option value="">All Groups</option>
-                                @foreach($groups as $group)
-                                    <option value="{{ $group->id }}">{{ $group->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                             <select id="filterStatus" class="form-select form-select-sm shadow-sm">
                                 <option value="">All Status</option>
                                 <option value="1">Active</option>
                                 <option value="0">Inactive</option>
                             </select>
                         </div>
-                        <div class="col-md-3">
-                            <input type="text" id="filterCode" placeholder="Search Code..." class="form-control shadow-sm" />
+                        <div class="col-md-4">
+                            <input type="text" id="filterName" placeholder="Search Name..." class="form-control shadow-sm" />
                         </div>
-                        <div class="col-md-3">
-                            <input type="text" id="filterGstName" placeholder="Search GST Name..." class="form-control shadow-sm" />
+                        <div class="col-md-4">
+                            <input type="text" id="filterEmail" placeholder="Search Email..." class="form-control shadow-sm" />
                         </div>
                     </div>
 
@@ -65,12 +57,12 @@
                                 <tr>
                                     <th>Name</th>
                                     <th>Email</th>
-                                    <th>PAN</th>
-                                    <th>Father's Name</th>
-                                    <th>Client Type</th>
-                                    <th>Group</th>
+                                    <th>Phone</th>
+                                    <!-- <th>Father's Name</th>
+                                    <th>Client Type</th> -->
+                                    <th>Whatsapp Number</th>
                                     <th>Status</th>
-                                    <th>Dashboard</th>
+                                    <!-- <th>Dashboard</th> -->
                                     <th class="text-center">Actions</th>
                                 </tr>
                             </thead>
@@ -126,8 +118,8 @@
                     data: function(d) {
                         d.group_id = $('#filterGroup').val();
                         d.status = $('#filterStatus').val();
-                        d.code = $('#filterCode').val();
-                        d.gstName = $('#filterGstName').val();
+                        d.name = $('#filterName').val();
+                        d.email = $('#filterEmail').val();
                     },
                     error: function (xhr, error, thrown) {
                         console.error("DataTables AJAX error:", xhr.responseText);
@@ -155,12 +147,12 @@
                 columns: [
                     { data: 'name' },
                     { data: 'email' },
-                    { data: 'pan' },
-                    { data: 'fathers_name' },
-                    { data: 'client_type_status' },
-                    { data: 'group' },
+                    { data: 'mobile' },
+                    { data: 'whatsapp_number' },
+                    // { data: 'client_type_status' },
+                    // { data: 'group' },
                     { data: 'status_toggle', orderable: false, searchable: false },
-                    { data: 'dashboard_toggle', orderable: false, searchable: false },
+                    // { data: 'dashboard_toggle', orderable: false, searchable: false },
                     { data: 'actions', orderable: false, searchable: false, className: 'text-center' }
                 ],
                 createdRow: function (row, data, dataIndex) {
@@ -173,7 +165,7 @@
         initCustomersTable();
 
         // Reload on filters
-        $('#filterGroup, #filterStatus, #filterCode, #filterGstName').on('change keyup', function() {
+        $('#filterGroup, #filterStatus, #filterName, #filterEmail').on('change keyup', function() {
             if (table) {
                 table.ajax.reload();
             }
@@ -225,58 +217,7 @@
         $.post("{{ url('admin/customers/toggle-dashboard') }}/" + $(this).data('id'), {_token: "{{ csrf_token() }}"});
     });
 
-    function loadGroups(){
-        $.get('{{ route("admin.customers.groups.list") }}', function(data){
-            let html = '';
-            data.forEach(group => {
-                var createdAt = moment(group.created_at);
-                html += `<tr class="zoom-item">
-                            <td>${group.name}</td>
-                            <td>${createdAt.format('MMMM D, YYYY')}</td>
-                            <td>
-                                <div class="btn-group">
-                                    <button class="btn btn-primary btn-sm" onclick="openGroupForm(${group.id})">
-                                        <i class="fa fa-edit"></i>
-                                    </button>
-                                    <button class="btn btn-danger btn-sm" onclick="deleteGroup(${group.id})">
-                                        <i class="fa fa-trash"></i>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>`;
-            });
-            $('#groupsTable tbody').html(html);
-        });
-    }
-
-    loadGroups();
-
-    function openGroupForm(id = null) {
-        $.post('{{ route("admin.customers.groups.form") }}', { id: id, _token: '{{ csrf_token() }}' }, function(html){
-            $('#addEditContent').html(html);
-            $('#editModal').modal('show');
-        });
-    }
-
-
-    function deleteGroup(groupId){
-        if(confirm('Are you sure?')){
-            $.ajax({
-                url: '{{ route("admin.customers.groups.delete") }}',
-                type: 'post',
-                data: {
-                    _token: '{{ csrf_token() }}',
-                    'groupId': groupId
-                },
-                success: function(res){
-                    if(res.success){
-                        loadGroups();
-                        toastr.success(res.message);
-                    }
-                }
-            });
-        }
-    }
+   
 
     $(document).on('click', '.viewCustomer', function () {
         let id = $(this).data('id');

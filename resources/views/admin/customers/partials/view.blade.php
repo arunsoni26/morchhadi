@@ -106,7 +106,7 @@
             <div class="col-md-7">
                 <h2>{{ $customer->name }}</h2>
                 <span class="text-primary"><i class="fa fa-envelope"></i> {{ $customer->email ?? 'N/A' }}</span><br>
-                <span class="text-primary"><i class="fa fa-phone"></i> {{ $customer->mobile_no ?? 'N/A' }}</span>
+                <span class="text-primary"><i class="fa fa-phone"></i> {{ $customer->mobile ?? 'N/A' }}</span>
             </div>
         </div>
     </div>
@@ -124,12 +124,12 @@
             </li>
             <li class="nav-item" role="presentation">
                 <button class="nav-link" id="documents-tab" data-bs-toggle="tab" data-bs-target="#documents" type="button" role="tab">
-                    GST Details
+                    Address Details
                 </button>
             </li>
             <li class="nav-item" role="presentation">
                 <button class="nav-link" id="credential-tab" data-bs-toggle="tab" data-bs-target="#credentials" type="button" role="tab">
-                    Credetials
+                    Credentials
                 </button>
             </li>
             <li class="nav-item" role="presentation">
@@ -145,25 +145,22 @@
             <div class="tab-pane fade show active" id="basic" role="tabpanel">
                 <table class="profile-table">
                     <tr>
-                        <td><strong>Father's Name:</strong></td>
-                        <td>{{ $customer->father_name ?? 'N/A' }}</td>
+                        <td><strong>Whatsapp Number:</strong></td>
+                        <td>{{ $customer->whatsapp_number ?? 'N/A' }}</td>
                     </tr>
                     <tr>
-                        <td><strong>Group</strong></td>
-                        <td>{{ $customer->group->name ?? 'N/A' }}</td>
+                        <td><strong>Gender</strong></td>
+                        <td>{{ ucfirst($customer->gender ?? 'N/A') }}</td>
+                        <!-- <td>{{ $customer->group->name ?? 'N/A' }}</td> -->
                     </tr>
-                    <tr>
-                        <td><strong>Code</strong></td>
-                        <td>{{ $customer->code ?? 'N/A' }}</td>
-                    </tr>
-                    <tr>
+                    <!-- <tr>
                         <td><strong>Address</strong></td>
                         <td>{{ $customer->address ?? 'N/A' }}</td>
                     </tr>
                     <tr>
                         <td><strong>Client Type Status</strong></td>
                         <td>{{ ucfirst($customer->client_type_status) ?? 'N/A' }}</td>
-                    </tr>
+                    </tr> -->
                     <tr>
                         <td><strong>Date of Birth</strong></td>
                         <td>{{ $customer->dob ? $customer->dob->format('d-m-Y') : 'N/A' }}</td>
@@ -175,10 +172,42 @@
             <div class="tab-pane fade" id="documents" role="tabpanel">
                 <table class="profile-table">
                     <tr>
-                        <td><strong>GST Name</strong></td>
-                        <td>{{ $customer->gst_name ?? 'N/A' }}</td>
+                        <td><strong>Pincode</strong></td>
+                        <td>{{ $customer->pincode ?? 'N/A' }}</td>
                     </tr>
                     <tr>
+                        <td><strong>House No</strong></td>
+                        <td>{{ $customer->house_no ?? 'N/A' }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Locality</strong></td>
+                        <td>{{ $customer->locality ?? 'N/A' }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Landmark</strong></td>
+                        <td>{{ $customer->landmark ?? 'N/A' }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>City</strong></td>
+                        <td>{{ $customer->city ?? 'N/A' }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>State</strong></td>
+                        <td>{{ $customer->state ?? 'N/A' }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Country</strong></td>
+                        <td>{{ $customer->country ?? 'N/A' }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Billing Address</strong></td>
+                        <td>{{ $customer->billing_address ?? 'N/A' }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Shipping Address</strong></td>
+                        <td>{{ $customer->shipping_address ?? 'N/A' }}</td>
+                    </tr>
+                    <!-- <tr>
                         <td><strong>GST No</strong></td>
                         <td>
                             {{ $customer->gst ?? 'N/A' }}
@@ -210,7 +239,7 @@
                             </a>
                             @endif
                         </td>
-                    </tr>
+                    </tr> -->
                 </table>
             </div>
 
@@ -236,12 +265,6 @@
                         <td><strong>Status</strong></td>
                         <td>
                             {!! $customer->status ? '<span class="badge bg-success">Active</span>' : '<span class="badge bg-danger">Inactive</span>' !!}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><strong>Dashboard</strong></td>
-                        <td>
-                            {!! $customer->hide_dashboard ? '<span class="badge bg-success">Visible</span>' : '<span class="badge bg-secondary">Hidden</span>' !!}
                         </td>
                     </tr>
                 </table>
