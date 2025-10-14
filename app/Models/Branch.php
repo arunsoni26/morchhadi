@@ -52,4 +52,11 @@ class Branch extends Model
     {
         return $this->belongsTo(User::class, 'deleted_by');
     }
+    
+    public function products()
+    {
+        return $this->belongsToMany(Product::class, 'branch_products')
+                    ->withPivot('stock_quantity', 'price_override')
+                    ->withTimestamps();
+    }
 }

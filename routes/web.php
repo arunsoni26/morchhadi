@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\FrontendController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RolePermissionController;
 use App\Http\Controllers\UserController;
@@ -83,6 +84,20 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
             Route::post('/form', [BranchController::class, 'form'])->name('branches.form');
             Route::post('/save', [BranchController::class, 'save'])->name('branches.save');
             Route::delete('/{id}', [BranchController::class, 'delete'])->name('branches.delete');
+        });
+        
+        // Products module
+        Route::middleware(['permission:products,can_view'])->group(function () {
+            Route::group(['prefix' => 'products', 'as' => 'products.'], function () {
+                Route::get('/', [ProductController::class, 'index'])->name('index');
+                Route::any('/list', [ProductController::class, 'list'])->name('list');
+                Route::any('/form', [ProductController::class, 'form'])->name('form');
+                Route::post('/save', [ProductController::class, 'save'])->name('save');
+                Route::post('/view', [ProductController::class, 'view'])->name('view');
+                Route::post('/delete/{id}', [ProductController::class, 'delete'])->name('delete');
+                Route::post('/toggle-status/{id}', [ProductController::class, 'toggleStatus'])->name('toggleStatus');
+                Route::post('/toggle-featured/{id}', [ProductController::class, 'toggleFeatured'])->name('toggleFeatured');
+            });
         });
     });
     
