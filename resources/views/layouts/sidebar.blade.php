@@ -89,12 +89,22 @@
                 </li>
             @endif
 
-         <li class="sidebar-item {{ request()->routeIs('admin.branches.*') ? 'active' : '' }}">
-            <a class="sidebar-link" href="{{ route('admin.branches.index') }}">
-                <i class="fas fa-code-branch"></i>
-                <span class="align-middle">Branches</span>
-            </a>
-        </li>
+            <li class="sidebar-item {{ request()->routeIs('admin.branches.*') ? 'active' : '' }}">
+                <a class="sidebar-link" href="{{ route('admin.branches.index') }}">
+                    <i class="fas fa-code-branch"></i>
+                    <span class="align-middle">Branches</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a data-bs-target="#forms" data-bs-toggle="collapse" class="sidebar-link" aria-expanded="true">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle align-middle"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg> <span class="align-middle">Products</span>
+                </a>
+                <ul id="forms" class="sidebar-dropdown list-unstyled collapse show" data-bs-parent="#sidebar" style="">
+                    <li class="sidebar-item"><a class="sidebar-link" href="{{ route('admin.products.index') }}">Products</a></li>
+                    <li class="sidebar-item"><a class="sidebar-link" href="{{ route('admin.products.categories.index') }}">Categories</a></li>
+                    <li class="sidebar-item"><a class="sidebar-link" href="{{ route('admin.products.brands.index') }}">Brands</a></li>
+                </ul>
+            </li>
         </ul>
     </div>
 </nav>

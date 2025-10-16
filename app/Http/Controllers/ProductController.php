@@ -47,8 +47,9 @@ class ProductController extends Controller
         $products = $query->get();
 
         // Map to frontend-friendly structure (like your Customers module)
-        $data = $products->map(function ($row) {
+        $data = $products->map(function ($row, $index) {
             return [
+                'productIndex' => $index+1,
                 'name' => e($row->name),
                 'sku' => $row->sku ?? '-',
                 'category' => e(optional($row->category)->name ?? '-'),

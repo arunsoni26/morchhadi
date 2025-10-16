@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\FrontendController;
+use App\Http\Controllers\ProductBrandController;
+use App\Http\Controllers\ProductCategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RolePermissionController;
@@ -97,6 +99,28 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
                 Route::post('/delete/{id}', [ProductController::class, 'delete'])->name('delete');
                 Route::post('/toggle-status/{id}', [ProductController::class, 'toggleStatus'])->name('toggleStatus');
                 Route::post('/toggle-featured/{id}', [ProductController::class, 'toggleFeatured'])->name('toggleFeatured');
+
+                // Product Categories CRUD routes
+                Route::group(['prefix' => 'categories', 'as' => 'categories.'], function () {
+                    Route::get('/', [ProductCategoryController::class, 'index'])->name('index');
+                    Route::get('list', [ProductCategoryController::class, 'list'])->name('list');
+                    Route::get('form', [ProductCategoryController::class, 'form'])->name('form');
+                    Route::post('store', [ProductCategoryController::class, 'store'])->name('store');
+                    Route::put('{id}', [ProductCategoryController::class, 'update'])->name('update');
+                    Route::delete('{id}', [ProductCategoryController::class, 'destroy'])->name('destroy');
+                    Route::any('toggle-status/{id}', [ProductCategoryController::class, 'toggleStatus'])->name('toggleStatus');
+                });
+
+                // Product Brands CRUD routes
+                Route::group(['prefix' => 'brands', 'as' => 'brands.'], function () {
+                    Route::get('/', [ProductBrandController::class, 'index'])->name('index');
+                    Route::get('list', [ProductBrandController::class, 'list'])->name('list');
+                    Route::get('form', [ProductBrandController::class, 'form'])->name('form');
+                    Route::post('store', [ProductBrandController::class, 'store'])->name('store');
+                    Route::put('{id}', [ProductBrandController::class, 'update'])->name('update');
+                    Route::delete('{id}', [ProductBrandController::class, 'destroy'])->name('destroy');
+                    Route::any('toggle-status/{id}', [ProductBrandController::class, 'toggleStatus'])->name('toggleStatus');
+                });
             });
         });
     });
