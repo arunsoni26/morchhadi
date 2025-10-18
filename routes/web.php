@@ -133,4 +133,4 @@ Route::get('/homepage', [FrontendController::class, 'home'])->name('homepage');
 Route::get('/about', [FrontendController::class, 'about'])->name('about');
 Route::get('/products', [FrontendController::class, 'products'])->name('products');
 Route::get('/services', [FrontendController::class, 'services'])->name('services');
-Route::get('/shops', [FrontendController::class, 'shops'])->name('shops');
+Route::get('/shop', [FrontendController::class, 'shops'])->name('shop');
