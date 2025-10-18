@@ -1,4 +1,4 @@
-:root{ --accent:#7f5539; --accent-2:#f1e6d6 }
+/* :root{ --accent:#7f5539; --accent-2:#f1e6d6 }
 body{ font-family: 'Segoe UI', Roboto, Arial, sans-serif; background: linear-gradient(180deg,#fff 0%, #fbf8f6 100%); }
 .navbar-brand{ font-weight:700; color:var(--accent) }
 .product-card{ border:0; border-radius:12px; transition:transform .18s ease, box-shadow .18s ease }
@@ -8,4 +8,109 @@ body{ font-family: 'Segoe UI', Roboto, Arial, sans-serif; background: linear-gra
 .price{ font-weight:700; color:var(--accent) }
 .cart-count{ position:absolute; top:-8px; right:-8px; background:#d9534f; color:white; font-size:.72rem; padding:2px 6px; border-radius:999px }
 
-@media(min-width:1200px){ .tea-img{ height:200px } }
+@media(min-width:1200px){ .tea-img{ height:200px } } */
+
+:root {
+  --accent: #7f5539;
+  --accent-2: #f1e6d6;
+}
+
+body {
+  font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+  background: linear-gradient(180deg, #fff 0%, #fbf8f6 100%);
+  min-height: 100vh;          /* full viewport height */
+  display: flex;              /* enable flex layout */
+  flex-direction: column;     /* stack header, main, footer */
+  margin: 0;
+}
+
+main {
+  flex: 1; /* main content takes remaining space, pushes footer down */
+}
+
+.navbar-brand {
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.product-card {
+  border: 0;
+  border-radius: 12px;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+.product-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.tea-img {
+  height: 160px;
+  object-fit: cover;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+@media (min-width: 1200px) {
+  .tea-img {
+    height: 200px;
+  }
+}
+
+.badge-accent {
+  background: var(--accent);
+  color: white;
+}
+
+.price {
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.cart-count {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: #d9534f;
+  color: white;
+  font-size: 0.72rem;
+  padding: 2px 6px;
+  border-radius: 999px;
+}
+
+.hero-img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Footer styling */
+footer {
+  background: #f8f9fa;
+  text-align: center;
+  padding: 15px 0;
+  color: #6c757d;
+  font-size: 0.9rem;
+}
+
+/* Extra Responsive Tweaks */
+@media (max-width: 575.98px) {
+  .navbar .form-control {
+    width: 100%;
+  }
+  .navbar .btn {
+    width: 100%;
+  }
+  .navbar .d-flex.flex-column {
+    width: 100%;
+  }
+  header h1 {
+    font-size: 1.8rem;
+  }
+  header .lead {
+    font-size: 1rem;
+  }
+  h2 {
+    font-size: 1.6rem;
+  }
+  h4 {
+    font-size: 1.3rem;
+  }
+}
