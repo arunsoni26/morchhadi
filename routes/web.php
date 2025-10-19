@@ -30,6 +30,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
         Route::post('/settings/update', [ProfileController::class, 'updateProfile'])->name('settings.update')->middleware('permission:profile,can_edit');
         Route::post('/settings/password', [ProfileController::class, 'updatePassword'])->name('settings.password')->middleware('permission:profile,can_edit');
 
+         Route::get('products/view/{id}', [ProductController::class, 'view'])->name('products.view');
         //news
         Route::middleware(['role.superadmin'])->group(function () {            
             // roles & permissions

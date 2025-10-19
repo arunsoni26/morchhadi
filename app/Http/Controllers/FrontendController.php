@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Branch;
+use App\Models\Product;
+use App\Models\ProductCategory;
 use Illuminate\Http\Request;
 
 class FrontendController extends Controller
@@ -16,9 +19,30 @@ class FrontendController extends Controller
         return view('frontend.about');
     }
 
-    public function products()
+    public function products(Request $request)
     {
-        return view('frontend.products');
+        $categories = ProductCategory::pluck('name', 'id');
+
+        $query = Product::with('category');
+
+        if ($request->filled('category_id')) {
+            $query->where('category_id', $request->category_id);
+        }
+
+        if ($request->filled('sort')) {
+            switch ($request->sort) {
+                case 'price-asc':
+                    $query->orderBy('price', 'asc');
+                    break;
+                case 'price-desc':
+                    $query->orderBy('price', 'desc');
+                    break;
+            }
+        }
+
+        $products = $query->get();
+
+        return view('frontend.products', compact('products', 'categories'));
     }
 
     public function services()
@@ -28,7 +52,8 @@ class FrontendController extends Controller
 
     public function shops()
     {
-        return view('frontend.shops');
-    }
+        $branches = Branch::where('status', 1)->get();
 
+        return view('frontend.shops', compact('branches'));
+    }
 }

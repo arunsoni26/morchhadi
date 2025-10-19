@@ -6,8 +6,8 @@ use App\Models\Product;
 use App\Models\ProductCategory;
 use App\Models\ProductBrand;
 use App\Models\Branch;
-use DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Storage;
@@ -49,7 +49,7 @@ class ProductController extends Controller
         // Map to frontend-friendly structure (like your Customers module)
         $data = $products->map(function ($row, $index) {
             return [
-                'productIndex' => $index+1,
+                'productIndex' => $index + 1,
                 'name' => e($row->name),
                 'sku' => $row->sku ?? '-',
                 'category' => e(optional($row->category)->name ?? '-'),
@@ -62,7 +62,7 @@ class ProductController extends Controller
                         <input 
                             type="checkbox" 
                             class="form-check-input toggle-featured" 
-                            data-id="'.$row->id.'" '.($row->is_featured ? 'checked' : '').'>
+                            data-id="' . $row->id . '" ' . ($row->is_featured ? 'checked' : '') . '>
                     </div>
                 ',
                 'status_toggle' => '
@@ -70,7 +70,7 @@ class ProductController extends Controller
                         <input 
                             type="checkbox" 
                             class="form-check-input toggle-status" 
-                            data-id="'.$row->id.'" '.($row->status ? 'checked' : '').'>
+                            data-id="' . $row->id . '" ' . ($row->status ? 'checked' : '') . '>
                     </div>
                 ',
                 'actions' => view('admin.products.partials.actions', compact('row'))->render()
@@ -97,14 +97,111 @@ class ProductController extends Controller
     /**
      * Save (create/update) — uses same style as your CustomerController (validation, DB transaction, S3 uploads).
      */
+    // public function save(Request $request)
+    // {
+    //     $productId = $request->id;
+
+    //     // Base validation: include all important fields
+    //     $rules = [
+    //         'name' => 'required|string|max:255',
+    //         'sku' => ['nullable','string','max:100', $productId ? Rule::unique('products','sku')->ignore($productId) : 'unique:products,sku'],
+    //         'category_id' => 'required|exists:product_categories,id',
+    //         'brand_id' => 'nullable|exists:product_brands,id',
+    //         'price' => 'required|numeric|min:0',
+    //         'discount_price' => 'nullable|numeric|min:0',
+    //         'stock_quantity' => 'nullable|integer|min:0',
+    //         'weight' => 'nullable|string|max:50',
+    //         'flavor_notes' => 'nullable|string|max:255',
+    //         'origin' => 'nullable|string|max:255',
+    //         'short_description' => 'nullable|string|max:1000',
+    //         'description' => 'nullable|string',
+    //         'image' => 'nullable|image|max:5120', // 5MB
+    //         'gallery_images.*' => 'nullable|image|max:5120',
+    //         'branch_ids' => 'nullable|array',
+    //         'branch_ids.*' => 'exists:branches,id',
+    //         'is_featured' => 'nullable|boolean',
+    //         'status' => 'nullable|boolean',
+    //     ];
+
+    //     $request->validate($rules);
+
+    //     DB::beginTransaction();
+    //     try {
+    //         // prepare data
+    //         $data = $request->only([
+    //             'name','sku','category_id','brand_id','price','discount_price','stock_quantity',
+    //             'weight','flavor_notes','origin','short_description','description'
+    //         ]);
+
+    //         $data['slug'] = Str::slug($request->name);
+    //         $data['is_featured'] = $request->has('is_featured') ? 1 : 0;
+    //         $data['status'] = $request->has('status') ? 1 : 0;
+    //         $data['updated_by'] = auth()->id();
+
+    //         // Disk (match your customers -> used s3)
+    //         $disk = 's3';
+
+    //         // Image upload (main image)
+    //         if ($request->hasFile('image')) {
+    //             // If updating, remove old image
+    //             if ($productId) {
+    //                 $old = Product::find($productId);
+    //                 if ($old && !empty($old->image)) {
+    //                     Storage::disk($disk)->delete($old->image);
+    //                 }
+    //             }
+    //             $data['image'] = $request->file('image')->store('products', $disk);
+    //         }
+
+    //         // Gallery images (store array paths as json)
+    //         if ($request->hasFile('gallery_images')) {
+    //             $galleryPaths = [];
+    //             // if updating and existing gallery exists, keep them unless user removes (simple approach)
+    //             if ($productId) {
+    //                 $existing = Product::find($productId);
+    //                 if ($existing && !empty($existing->gallery_images)) {
+    //                     // keep existing images by default
+    //                     $galleryPaths = is_array($existing->gallery_images) ? $existing->gallery_images : json_decode($existing->gallery_images, true) ?? [];
+    //                 }
+    //             }
+
+    //             foreach ($request->file('gallery_images') as $file) {
+    //                 $path = $file->store('morchhadi/products/gallery', $disk);
+    //                 $galleryPaths[] = $path;
+    //             }
+
+    //             $data['gallery_images'] = json_encode($galleryPaths);
+    //         }
+
+    //         if ($productId) {
+    //             $product = Product::findOrFail($productId);
+    //             $product->fill($data);
+    //             $product->save();
+    //         } else {
+    //             $data['created_by'] = auth()->id();
+    //             $product = Product::create($data);
+    //         }
+
+    //         // Sync branches (simple sync of branch ids; pivot fields can be added later)
+    //         $branchIds = $request->branch_ids ?? [];
+    //         $product->branches()->sync($branchIds);
+
+    //         DB::commit();
+
+    //         return response()->json(['code' => 200, 'success' => true, 'message' => 'Product saved successfully.']);
+    //     } catch (\Exception $e) {
+    //         DB::rollBack();
+    //         return response()->json(['code' => 500, 'success' => false, 'message' => $e->getMessage()]);
+    //     }
+    // }
+
     public function save(Request $request)
     {
         $productId = $request->id;
 
-        // Base validation: include all important fields
         $rules = [
             'name' => 'required|string|max:255',
-            'sku' => ['nullable','string','max:100', $productId ? Rule::unique('products','sku')->ignore($productId) : 'unique:products,sku'],
+            'sku' => ['nullable', 'string', 'max:100', $productId ? Rule::unique('products', 'sku')->ignore($productId) : 'unique:products,sku'],
             'category_id' => 'required|exists:product_categories,id',
             'brand_id' => 'nullable|exists:product_brands,id',
             'price' => 'required|numeric|min:0',
@@ -115,7 +212,7 @@ class ProductController extends Controller
             'origin' => 'nullable|string|max:255',
             'short_description' => 'nullable|string|max:1000',
             'description' => 'nullable|string',
-            'image' => 'nullable|image|max:5120', // 5MB
+            'image' => 'nullable|image|max:5120',
             'gallery_images.*' => 'nullable|image|max:5120',
             'branch_ids' => 'nullable|array',
             'branch_ids.*' => 'exists:branches,id',
@@ -127,10 +224,19 @@ class ProductController extends Controller
 
         DB::beginTransaction();
         try {
-            // prepare data
             $data = $request->only([
-                'name','sku','category_id','brand_id','price','discount_price','stock_quantity',
-                'weight','flavor_notes','origin','short_description','description'
+                'name',
+                'sku',
+                'category_id',
+                'brand_id',
+                'price',
+                'discount_price',
+                'stock_quantity',
+                'weight',
+                'flavor_notes',
+                'origin',
+                'short_description',
+                'description'
             ]);
 
             $data['slug'] = Str::slug($request->name);
@@ -138,41 +244,50 @@ class ProductController extends Controller
             $data['status'] = $request->has('status') ? 1 : 0;
             $data['updated_by'] = auth()->id();
 
-            // Disk (match your customers -> used s3)
-            $disk = 's3';
-
-            // Image upload (main image)
-            if ($request->hasFile('image')) {
-                // If updating, remove old image
-                if ($productId) {
-                    $old = Product::find($productId);
-                    if ($old && !empty($old->image)) {
-                        Storage::disk($disk)->delete($old->image);
-                    }
-                }
-                $data['image'] = $request->file('image')->store('products', $disk);
+            // ✅ Define public path for uploads
+            $uploadPath = public_path('uploads/products');
+            if (!file_exists($uploadPath)) {
+                mkdir($uploadPath, 0777, true);
             }
 
-            // Gallery images (store array paths as json)
+            // Upload main image
+            if ($request->hasFile('image')) {
+                if ($productId) {
+                    $old = Product::find($productId);
+                    if ($old && !empty($old->image) && file_exists(public_path($old->image))) {
+                        unlink(public_path($old->image));
+                    }
+                }
+
+                $imageFile = $request->file('image');
+                $imageName = time() . '_' . uniqid() . '.' . $imageFile->getClientOriginalExtension();
+                $imageFile->move($uploadPath, $imageName);
+                $data['image'] = 'uploads/products/' . $imageName;
+            }
+
+            // Upload gallery images
             if ($request->hasFile('gallery_images')) {
                 $galleryPaths = [];
-                // if updating and existing gallery exists, keep them unless user removes (simple approach)
+
                 if ($productId) {
                     $existing = Product::find($productId);
                     if ($existing && !empty($existing->gallery_images)) {
-                        // keep existing images by default
-                        $galleryPaths = is_array($existing->gallery_images) ? $existing->gallery_images : json_decode($existing->gallery_images, true) ?? [];
+                        $galleryPaths = is_array($existing->gallery_images)
+                            ? $existing->gallery_images
+                            : json_decode($existing->gallery_images, true) ?? [];
                     }
                 }
 
                 foreach ($request->file('gallery_images') as $file) {
-                    $path = $file->store('morchhadi/products/gallery', $disk);
-                    $galleryPaths[] = $path;
+                    $galleryName = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    $file->move($uploadPath . '/gallery', $galleryName);
+                    $galleryPaths[] = 'uploads/products/gallery/' . $galleryName;
                 }
 
                 $data['gallery_images'] = json_encode($galleryPaths);
             }
 
+            // Save product
             if ($productId) {
                 $product = Product::findOrFail($productId);
                 $product->fill($data);
@@ -182,7 +297,6 @@ class ProductController extends Controller
                 $product = Product::create($data);
             }
 
-            // Sync branches (simple sync of branch ids; pivot fields can be added later)
             $branchIds = $request->branch_ids ?? [];
             $product->branches()->sync($branchIds);
 

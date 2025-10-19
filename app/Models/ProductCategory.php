@@ -14,4 +14,9 @@ class ProductCategory extends Model
         'created_by',
         'updated_by',
     ];
+
+    public function category()
+    {
+        return $this->belongsTo(ProductCategory::class);
+    }
 }
