@@ -1,0 +1,11 @@
+:root{ --accent:#7f5539; --accent-2:#f1e6d6 }
+body{ font-family: 'Segoe UI', Roboto, Arial, sans-serif; background: linear-gradient(180deg,#fff 0%, #fbf8f6 100%); }
+.navbar-brand{ font-weight:700; color:var(--accent) }
+.product-card{ border:0; border-radius:12px; transition:transform .18s ease, box-shadow .18s ease }
+.product-card:hover{ transform:translateY(-6px); box-shadow:0 10px 30px rgba(0,0,0,.08) }
+.tea-img{ height:160px; object-fit:cover; border-top-left-radius:12px; border-top-right-radius:12px }
+.badge-accent{ background:var(--accent); color:white }
+.price{ font-weight:700; color:var(--accent) }
+.cart-count{ position:absolute; top:-8px; right:-8px; background:#d9534f; color:white; font-size:.72rem; padding:2px 6px; border-radius:999px }
+
+@media(min-width:1200px){ .tea-img{ height:200px } }

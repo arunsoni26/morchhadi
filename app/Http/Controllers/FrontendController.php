@@ -11,7 +11,10 @@ class FrontendController extends Controller
 {
     public function home()
     {
-        return view('frontend.index');
+        $products = Product::with('category')
+            ->where('is_featured', 1)
+            ->get();
+        return view('frontend.index', compact('products'));
     }
 
     public function about()

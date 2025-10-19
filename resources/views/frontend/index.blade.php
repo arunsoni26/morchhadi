@@ -12,7 +12,7 @@
         <a href="{{ route('products') }}" class="btn btn-primary btn-lg mt-2">Shop Teas</a>
       </div>
       <div class="col-lg-5 col-md-6 col-12 text-center">
-        <img src="https://images.unsplash.com/photo-1510627498534-cf7e9002facc?auto=format&fit=crop&w=900&q=60" 
+        <img src="{{ asset('img/products/morchhadi-product.jpg') }}" 
              class="img-fluid rounded shadow-sm hero-img" alt="Tea hero">
       </div>
     </div>
@@ -24,8 +24,32 @@
       <h3 class="mb-0">Featured Blends</h3>
       <a href="{{ route('products') }}" class="text-decoration-none">View all</a>
     </div>
-    <div id="featuredGrid" class="row g-4">
-      <!-- Product cards populated dynamically (e.g. using JS or Blade loop) -->
+    <div id="" class="row g-4">
+      @foreach ($products as $product)
+        <div class="col-12 col-sm-6 col-lg-4">
+          <div class="card product-card h-100">
+            <img src="{{ $product->image }}" class="tea-img w-100" alt="{{ $product->name }}">
+            <div class="card-body d-flex flex-column">
+              <h5 class="card-title mb-1">{{ $product->name }}</h5>
+              <p class="small text-muted mb-2">{{ $product->description }}</p>
+              <div class="d-flex align-items-center mt-auto"><div class="price">₹ {{ $product->price }}</div><div class="ms-auto d-flex gap-2">
+                <a class="btn btn-outline btn-success" href="https://wa.me/{{ $product->branches[0]->whatsapp_number }}?text=Hello, I need assistance on {{ $product->name }} product" target="_blank">
+                  <i class="bi bi-whatsapp"></i>
+                </a>
+                <button class="btn btn-outline-secondary btn-sm view-btn" data-id="{{ $product->id }}">View</button>
+                <button 
+                  class="btn btn-primary btn-sm add-btn"
+                  data-id="{{ $product->id }}"
+                  data-name="{{ $product->name }}"
+                  data-price="{{ $product->price }}"
+                  data-img="{{ $product->image }}"
+                >
+                  Add
+                </button>
+            </div>
+          </div>
+        </div>
+      @endforeach
     </div>
   </section>
 @endsection

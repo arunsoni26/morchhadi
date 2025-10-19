@@ -66,8 +66,6 @@ class Product extends Model
 
     public function branches()
     {
-        return $this->belongsToMany(Branch::class, 'branch_products')
-                    ->withPivot('stock_quantity', 'price_override')
-                    ->withTimestamps();
+        return $this->belongsToMany(Branch::class, 'branch_products');
     }
 }
