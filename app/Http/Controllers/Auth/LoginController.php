@@ -25,7 +25,20 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = 'admin/dashboard';
+    protected function redirectTo()
+    {
+        $user = auth()->user();
+
+        if ($user->role->slug === 'superadmin') {
+            return '/admin/dashboard';
+        } elseif ($user->role->slug === 'customer') {
+            return '/homepage';
+        }
+
+        // Default fallback
+        return '/homepage';
+    }
+
 
     /**
      * Create a new controller instance.
