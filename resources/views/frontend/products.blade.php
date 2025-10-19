@@ -13,9 +13,9 @@
                 <select name="category_id" class="form-select form-select-sm" style="width: 180px" onchange="this.form.submit()">
                     <option value="">All Categories</option>
                     @foreach($categories as $id => $name)
-                        <option value="{{ $id }}" {{ request('category_id') == $id ? 'selected' : '' }}>
-                            {{ $name }}
-                        </option>
+                    <option value="{{ $id }}" {{ request('category_id') == $id ? 'selected' : '' }}>
+                        {{ $name }}
+                    </option>
                     @endforeach
                 </select>
 
@@ -33,33 +33,41 @@
     <!-- 🟡 Product Grid -->
     <div id="productGrid" class="row g-4">
         @forelse($products as $product)
-            @php
-                $gallery = json_decode($product->gallery_images, true);
-                $firstImage = $gallery[0] ?? 'images/no-image.jpg';
-            @endphp
+        
+        <div class="col-md-3 col-sm-6">
+            <div class="card h-100 shadow-sm">
+                <img src="{{ asset($product->image) }}" class="card-img-top" alt="{{ $product->name }}" style="height:200px;">
 
-            <div class="col-md-3 col-sm-6">
-                <div class="card h-100 shadow-sm">
-                    <img src="{{ asset($firstImage) }}" class="card-img-top" alt="{{ $product->name }}">
+                <div class="card-body text-center">
+                    <h6 class="fw-bold">{{ $product->name }}</h6>
+                    <p class="text-muted mb-1 small">
+                        {{ $product->category->name ?? 'Uncategorized' }}
+                    </p>
+                    <p class="text-dark mb-1 fw-semibold">
+                        ₹{{ number_format($product->price, 2) }}
+                    </p>
 
-                    <div class="card-body text-center">
-                        <h6 class="fw-bold">{{ $product->name }}</h6>
-                        <p class="text-muted mb-1 small">
-                            {{ $product->category->name ?? 'Uncategorized' }}
-                        </p>
-                        <p class="text-dark mb-1 fw-semibold">
-                            ₹{{ number_format($product->price, 2) }}
-                        </p>
-                        <button class="btn btn-sm btn-outline-primary add-to-cart" data-id="{{ $product->id }}">
-                            Add to Cart
-                        </button>
+                    <div class="d-flex justify-content-center gap-2">
+                        @if($product->whatsapp_number)
+                        <a href="https://wa.me/{{ $product->whatsapp_number }}?text=Hello%20I%20want%20to%20inquire%20about%20{{ urlencode($product->name) }}"
+                            class="btn btn-outline-success btn-sm" target="_blank" title="Chat on WhatsApp">
+                            <i class="bi bi-whatsapp"></i>
+                        </a>
+                        @endif
+
+                        <a href="{{ route('product.view', $product->id) }}" class="btn btn-sm btn-outline-secondary" title="View Product">
+                            View
+                        </a>
+
                     </div>
                 </div>
+
             </div>
+        </div>
         @empty
-            <div class="col-12 text-center py-5">
-                <p class="text-muted mb-0">No products found.</p>
-            </div>
+        <div class="col-12 text-center py-5">
+            <p class="text-muted mb-0">No products found.</p>
+        </div>
         @endforelse
     </div>
 </main>
