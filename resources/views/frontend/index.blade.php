@@ -38,11 +38,11 @@
                 </a>
                 <button class="btn btn-outline-secondary btn-sm view-btn" data-id="{{ $product->id }}">View</button>
                 <button 
-                  class="btn btn-primary btn-sm add-btn"
+                  class="btn btn-primary btn-sm addToCartBtn"
                   data-id="{{ $product->id }}"
                   data-name="{{ $product->name }}"
                   data-price="{{ $product->price }}"
-                  data-img="{{ $product->image }}"
+                  data-img="{{ asset($product->image) }}"
                 >
                   Add
                 </button>

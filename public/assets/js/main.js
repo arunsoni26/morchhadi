@@ -107,7 +107,7 @@ $(function () {
   updateCartUI();
 
   // Add to cart via inline data attributes
-  $(document).on('click', '.add-btn', function () {
+  $(document).on('click', '.addToCartBtn', function () {
     const $btn = $(this);
     const product = {
       id: $btn.data('id'),

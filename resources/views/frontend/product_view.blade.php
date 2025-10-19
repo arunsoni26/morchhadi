@@ -39,10 +39,18 @@
             <h2>{{ $product->name }}</h2>
             <p class="text-muted">{{ $product->category->name ?? 'Uncategorized' }}</p>
             <h4 class="fw-semibold">₹{{ number_format($product->price, 2) }}</h4>
-            <p>{{ $product->short_description }}</p>
+            <p>{{ $product->description }}</p>
 
             <div class="d-flex gap-2">
-                <button class="btn btn-primary add-to-cart" data-id="{{ $product->id }}">Add to Cart</button>
+                <button
+                    class="btn btn-primary addToCartBtn" 
+                    data-id="{{ $product->id }}"
+                    data-name="{{ $product->name }}"
+                    data-price="{{ $product->price }}"
+                    data-img="{{ asset($product->image) }}"
+                >
+                    Add to Cart
+                </button>
 
                 @if($product->whatsapp_number)
                    <a href="https://wa.me/{{ $product->whatsapp_number }}?text=Hello%20I%20want%20to%20inquire%20about%20Morchadi%20Product%20{{ urlencode($product->name) }}"
