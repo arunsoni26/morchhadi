@@ -31,18 +31,55 @@
       </ul>
 
       <form class="d-flex me-3" role="search">
-        <input id="searchInputNav" class="form-control me-2" type="search" placeholder="Search teas...">
+        <!-- <input id="searchInputNav" class="form-control me-2" type="search" placeholder="Search teas..."> -->
       </form>
-
       <div class="d-flex gap-2 align-items-center">
-        <a href="#" id="accountBtn" class="btn btn-outline-secondary" title="Account">
-          <i class="bi bi-person"></i>
+        
+        {{-- Show when user is authenticated --}}
+        @auth
+        <div class="dropdown">
+          <a href="#" id="accountBtn" class="btn btn-outline-secondary dropdown-toggle" 
+            title="Account" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="bi bi-person"></i>
+          </a>
+
+          <ul class="dropdown-menu dropdown-menu-end text-small shadow" aria-labelledby="accountBtn">
+            <li class="dropdown-header d-flex align-items-center gap-2 px-3">
+              <i class="bi bi-person-circle"></i>
+              <span><strong>{{ auth()->user()->name }}</strong></span>
+            </li>
+            <li><hr class="dropdown-divider"></li>
+            <li>
+              <a class="dropdown-item d-flex align-items-center gap-2" href="">
+                <i class="bi bi-person-lines-fill"></i> Profile
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item d-flex align-items-center gap-2" href="{{ route('logout') }}"
+                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                <i class="bi bi-box-arrow-right"></i> Logout
+              </a>
+              <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                  @csrf
+              </form>
+            </li>
+          </ul>
+        </div>
+        @endauth
+
+        {{-- Show when user is guest --}}
+        @guest
+        <a href="{{ route('login') }}" class="btn btn-outline-primary">
+          <i class="bi-person-lock"></i>
         </a>
-        <button id="cartBtnTop" class="btn btn-outline-secondary position-relative" data-bs-toggle="offcanvas" data-bs-target="#cartCanvas" title="Cart">
-          <i class="bi bi-cart3"></i>
-          <span id="cartCountTop" class="badge bg-danger position-absolute top-0 start-100 translate-middle d-none">0</span>
-        </button>
+        <a href="{{ route('register') }}" class="btn btn-primary">
+          <i class="bi bi-person-plus-fill"></i>
+        </a>
+        @endguest
+
       </div>
+
+
     </div>
   </div>
 </nav>

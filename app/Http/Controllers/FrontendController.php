@@ -11,9 +11,19 @@ class FrontendController extends Controller
 {
     public function home()
     {
-        $products = Product::with('category')
+        $categories = ProductCategory::pluck('name', 'id');
+
+        // Eager load branches as well
+        $query = Product::with(['category', 'branches']);
+
+        $products = $query
             ->where('is_featured', 1)
             ->get();
+
+        // ✅ Attach WhatsApp number from related branch (first one)
+        $products->each(function ($product) {
+            $product->whatsapp_number = $product->branches->first()->whatsapp_number ?? null;
+        });
         return view('frontend.index', compact('products'));
     }
 

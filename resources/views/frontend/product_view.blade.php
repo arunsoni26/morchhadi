@@ -42,8 +42,15 @@
             <p>{{ $product->description }}</p>
 
             <div class="d-flex gap-2">
+
+                @if($product->whatsapp_number)
+                    <a href="https://wa.me/{{ $product->whatsapp_number }}?text=Hello%20I%20want%20to%20inquire%20about%20{{ urlencode($product->name) }}"
+                        class="btn btn-outline-success btn-sm" target="_blank" title="Chat on WhatsApp">
+                        <i class="bi bi-whatsapp"></i>
+                    </a>
+                @endif
                 <button
-                    class="btn btn-primary addToCartBtn" 
+                    class="btn btn-sm btn-primary addToCartBtn" 
                     data-id="{{ $product->id }}"
                     data-name="{{ $product->name }}"
                     data-price="{{ $product->price }}"
@@ -51,13 +58,6 @@
                 >
                     Add to Cart
                 </button>
-
-                @if($product->whatsapp_number)
-                   <a href="https://wa.me/{{ $product->whatsapp_number }}?text=Hello%20I%20want%20to%20inquire%20about%20Morchadi%20Product%20{{ urlencode($product->name) }}"
-                    class="btn btn-success" target="_blank">
-                        <i class="bi bi-whatsapp"></i> WhatsApp
-                    </a>
-                @endif
             </div>
         </div>
     </div>

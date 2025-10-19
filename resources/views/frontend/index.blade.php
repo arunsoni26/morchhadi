@@ -33,11 +33,15 @@
               <h5 class="card-title mb-1">{{ $product->name }}</h5>
               <p class="small text-muted mb-2">{{ $product->description }}</p>
               <div class="d-flex align-items-center mt-auto"><div class="price">₹ {{ $product->price }}</div><div class="ms-auto d-flex gap-2">
-                <a class="btn btn-outline btn-success" href="https://wa.me/{{ $product->branches[0]->whatsapp_number }}?text=Hello, I need assistance on {{ $product->name }} product" target="_blank">
+                <a href="https://wa.me/{{ $product->whatsapp_number }}?text=Hello%20I%20want%20to%20inquire%20about%20{{ urlencode($product->name) }}"
+                  class="btn btn-outline-success btn-sm" target="_blank" title="Chat on WhatsApp">
                   <i class="bi bi-whatsapp"></i>
                 </a>
-                <button class="btn btn-outline-secondary btn-sm view-btn" data-id="{{ $product->id }}">View</button>
-                <button 
+
+                <a href="{{ route('product.view', $product->id) }}" class="btn btn-sm btn-outline-secondary" title="View Product">
+                    View
+                </a>
+                <!-- <button 
                   class="btn btn-primary btn-sm addToCartBtn"
                   data-id="{{ $product->id }}"
                   data-name="{{ $product->name }}"
@@ -45,7 +49,7 @@
                   data-img="{{ asset($product->image) }}"
                 >
                   Add
-                </button>
+                </button> -->
             </div>
           </div>
         </div>
