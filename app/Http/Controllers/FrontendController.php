@@ -112,6 +112,7 @@ class FrontendController extends Controller
 
         // Gallery images array
         $gallery = $product->gallery_images ?? [];
+        $product->whatsapp_number = $product->branches->first()->whatsapp_number ?? null;
 
         return view('frontend.product_view', compact('product', 'gallery'));
     }
