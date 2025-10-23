@@ -16,16 +16,16 @@
     <div class="row g-4 justify-content-center">
         <div class="col-12 col-sm-6 col-md-4">
             <div class="card p-3 text-center h-100">
-                <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=400&q=60"
-                     class="rounded-circle mb-2 mx-auto" width="80" alt="Priya Sharma">
-                <h6 class="mb-0">Priya Sharma</h6>
+                <img src=""
+                     class="rounded-circle mb-2 mx-auto" width="80" alt="Santosh Sen">
+                <h6 class="mb-0">Santosh Sen</h6>
                 <small class="text-muted">Founder</small>
             </div>
         </div>
-
+<!-- 
         <div class="col-12 col-sm-6 col-md-4">
             <div class="card p-3 text-center h-100">
-                <img src="https://images.unsplash.com/photo-1545996124-6b8e6f4b3f7b?auto=format&fit=crop&w=400&q=60"
+                <img src=""
                      class="rounded-circle mb-2 mx-auto" width="80" alt="Rohit Patel">
                 <h6 class="mb-0">Rohit Patel</h6>
                 <small class="text-muted">Head of Sourcing</small>
@@ -34,12 +34,12 @@
 
         <div class="col-12 col-sm-6 col-md-4">
             <div class="card p-3 text-center h-100">
-                <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=400&q=60"
+                <img src=""
                      class="rounded-circle mb-2 mx-auto" width="80" alt="Anita Desai">
                 <h6 class="mb-0">Anita Desai</h6>
                 <small class="text-muted">Head of Operations</small>
             </div>
-        </div>
+        </div> -->
     </div>
 </main>
 @endsection

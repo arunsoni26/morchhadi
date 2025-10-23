@@ -106,6 +106,7 @@
       .why-choose .feature-card { margin-bottom: 20px; }
     }
   </style>
+  @stack('styles')
 </head>
 <body>
   <div class="d-flex flex-column min-vh-100">
@@ -124,5 +125,6 @@
   <script>
     document.getElementById('yearSpan').textContent = new Date().getFullYear();
   </script>
+  @stack('scripts')
 </body>
 </html>

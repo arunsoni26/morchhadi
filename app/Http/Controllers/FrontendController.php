@@ -57,19 +57,25 @@ class FrontendController extends Controller
 
     //     return view('frontend.products', compact('products', 'categories'));
     // }
+
     public function products(Request $request)
     {
         $categories = ProductCategory::pluck('name', 'id');
 
-        // Eager load branches as well
+        // 🔍 Start building query
         $query = Product::with(['category', 'branches']);
 
-        // Category filter
+        // 🔍 Search filter
+        if ($request->filled('search')) {
+            $query->where('name', 'like', '%' . $request->search . '%');
+        }
+
+        // 🟡 Category filter
         if ($request->filled('category_id')) {
             $query->where('category_id', $request->category_id);
         }
 
-        // Sorting
+        // 🟢 Sorting
         if ($request->filled('sort')) {
             switch ($request->sort) {
                 case 'price-asc':
@@ -78,6 +84,9 @@ class FrontendController extends Controller
                 case 'price-desc':
                     $query->orderBy('price', 'desc');
                     break;
+                // case 'popular':
+                //     $query->orderBy('views', 'desc');
+                //     break;
             }
         }
 
@@ -88,6 +97,12 @@ class FrontendController extends Controller
             $product->whatsapp_number = $product->branches->first()->whatsapp_number ?? null;
         });
 
+        // 🟩 AJAX Response: Return only the product grid HTML
+        if ($request->ajax()) {
+            return view('frontend.partials.product_list', compact('products'))->render();
+        }
+
+        // 🟦 Normal full-page load
         return view('frontend.products', compact('products', 'categories'));
     }
 
