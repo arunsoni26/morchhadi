@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg bg-white px-3 py-3 shadow-sm sticky-top">
   <div class="container">
-    <a class="navbar-brand" href="{{ url('/public/homepage') }}">
+    <a class="navbar-brand" href="{{ route('homepage') }}">
       <img src="https://morchhadichai.co.in/public/img/images/morchhadi-logo-3.png" alt="Morchhadi" style="height: 60px;">
     </a>
 
