@@ -53,8 +53,15 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'mobile'   => ['required', 'string', 'max:15'],
+
+            'city'     => ['required', 'string', 'max:100'],
+            'state'    => ['required', 'string', 'max:100'],
+            'country'  => ['required', 'string', 'max:100'],
+            'pincode'  => ['required', 'string', 'max:10'],
         ]);
     }
+
 
     /**
      * Create a new user instance after a valid registration.
@@ -64,7 +71,7 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-         $user = User::create([
+        $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
@@ -74,7 +81,17 @@ class RegisterController extends Controller
             'user_id' => $user->id,
             'name'    => $data['name'],
             'email'   => $data['email'],
-            'password'=> $user->password, // or Hash again, but this is fine
+            'password' => $user->password, 
+            'mobile'           => $data['mobile'],
+            'whatsapp_number'  => $data['whatsapp_number'] ?? null,
+            'house_no'         => $data['house_no'] ?? null,
+            'locality'         => $data['locality'] ?? null,
+            'landmark'         => $data['landmark'] ?? null,
+            'city'             => $data['city'],
+            'state'            => $data['state'],
+            'country'          => $data['country'],
+            'pincode'          => $data['pincode'],
+            'status'           => 1,
         ]);
 
         return $user;
