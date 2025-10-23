@@ -5,9 +5,9 @@
 @section('content')
 <main class="container my-5">
     <div class="text-center mb-4">
-        <h2 class="fw-bold">About TeaHouse</h2>
+        <h2 class="fw-bold">About {{ env('APP_NAME') }}</h2>
         <p class="text-muted mx-auto" style="max-width:600px;">
-            TeaHouse is a small-batch tea curator — sourcing ethically and delivering freshness.
+            {{ env('APP_NAME') }} is a small-batch tea curator — sourcing ethically and delivering freshness.
             Our mission is to reconnect people with thoughtful tea rituals.
         </p>
     </div>
