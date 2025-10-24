@@ -3,7 +3,12 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>@yield('title', 'Morchadi — Home')</title>
+  <title>@yield('title', 'Buy Premium Handpicked Tea Online | Morchadi Chai India')</title>
+  <meta name="description" content="Morchadi offers premium handpicked tea blends sourced from sustainable farms. Experience the joy and calm of authentic tea, freshly packed and delivered to your cup.">
+  <meta name="keywords" content="Morchadi tea, premium tea, chai, herbal tea, Assam tea, Darjeeling tea, best tea India">
+  <meta name="author" content="Morchadi Tea">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://morchhadichai.co.in/">
 
   <link rel="icon" href="https://morchhadichai.co.in/public/img/images/morchhadi-logo-2.jpg" type="image/x-icon">
 

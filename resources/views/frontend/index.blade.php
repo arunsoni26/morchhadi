@@ -14,7 +14,7 @@
       </div>
       <div class="col-lg-5 col-md-6 col-12 text-center">
         <img src="{{ asset('img/products/morchhadi-product.jpg') }}" 
-             class="img-fluid rounded shadow-sm hero-img" alt="Tea hero">
+             class="img-fluid rounded shadow-sm hero-img" alt="Morchadi premium tea blend packaging">
       </div>
     </div>
   </header>
