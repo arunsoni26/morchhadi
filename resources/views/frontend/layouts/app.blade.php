@@ -8,6 +8,7 @@
   <meta name="keywords" content="Morchadi tea, premium tea, chai, herbal tea, Assam tea, Darjeeling tea, best tea India">
   <meta name="author" content="Morchadi Tea">
   <meta name="robots" content="index, follow">
+  <meta name="google-site-verification" content="jXQlBnZKzws11fwIVANk-SKLgIhmrMTbZvjYReBjlBU" />
   <link rel="canonical" href="https://morchhadichai.co.in/">
 
   <link rel="icon" href="https://morchhadichai.co.in/public/img/images/morchhadi-logo-2.jpg" type="image/x-icon">
