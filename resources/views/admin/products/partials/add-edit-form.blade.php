@@ -101,7 +101,7 @@
             <input type="file" name="image" class="form-control">
             @if(!empty($product->image))
             <div class="mt-2">
-                <img src="{{ asset('storage/'.$product->image) }}" alt="Product" width="80" class="rounded border">
+                <img src="{{ asset('/'.$product->image) }}" alt="Product" width="80" class="rounded border">
             </div>
             @endif
         </div>
@@ -113,7 +113,7 @@
             @if(!empty($product->gallery_images))
             <div class="mt-2 d-flex flex-wrap gap-2">
                 @foreach(json_decode($product->gallery_images, true) ?? [] as $img)
-                <img src="{{ asset('storage/'.$img) }}" alt="Gallery" width="60" class="rounded border">
+                <img src="{{ asset('/'.$img) }}" alt="Gallery" width="60" class="rounded border">
                 @endforeach
             </div>
             @endif
