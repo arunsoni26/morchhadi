@@ -49,7 +49,7 @@
                         <i class="bi bi-whatsapp"></i>
                     </a>
                 @endif
-                <button
+                <!-- <button
                     class="btn btn-sm btn-primary addToCartBtn" 
                     data-id="{{ $product->id }}"
                     data-name="{{ $product->name }}"
@@ -57,7 +57,7 @@
                     data-img="{{ asset($product->image) }}"
                 >
                     Add to Cart
-                </button>
+                </button> -->
             </div>
         </div>
     </div>

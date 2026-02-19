@@ -27,20 +27,22 @@
     </div>
 </div>
 
-<table id="productsTable" class="table table-bordered table-striped">
-    <thead>
-        <tr>
-            <th>#</th>
-            <th>Name</th>
-            <th>Category</th>
-            <th>Brand</th>
-            <th>Price</th>
-            <th>Featured<br>Product</th>
-            <th>Status</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-</table>
+<div class="table-responsive">
+    <table id="productsTable" class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Category</th>
+                <th>Brand</th>
+                <th>Price</th>
+                <th>Featured<br>Product</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+    </table>
+</div>
 
 {{-- Reusable modal containers --}}
 <div id="modalContainer"></div>

@@ -2,7 +2,7 @@
 
 @section('content')
 <main style="display:flex; justify-content:center; align-items:center; min-height:80vh; background: linear-gradient(135deg, #f7f6f2 0%, #e3f4f1 100%);">
-    <div class="card shadow-lg rounded" style="width: 400px; min-height: 520px; border-radius: 15px;">
+    <div class="card shadow-lg rounded" style="width: 400px; border-radius: 15px;">
         <div class="card-header text-center text-white" style="background: linear-gradient(90deg, #1A5E63, #53B8A3); font-weight:600; font-size:1.2rem; border-top-left-radius:15px; border-top-right-radius:15px;">
             {{ __('Login') }}
         </div>

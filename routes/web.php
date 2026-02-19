@@ -14,9 +14,9 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\BranchController;
 use Illuminate\Support\Facades\Auth;
 
-Route::get('/', function () {
-    return redirect('login');
-});
+// Route::get('/', function () {
+//     return redirect('login');
+// });
 
 Auth::routes();
 
@@ -130,7 +130,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
 
 //Frontend
 
-Route::get('/homepage', [FrontendController::class, 'home'])->name('homepage');
+Route::get('/', [FrontendController::class, 'home'])->name('homepage');
 Route::get('/about', [FrontendController::class, 'about'])->name('about');
 Route::get('/products', [FrontendController::class, 'products'])->name('products');
 Route::get('/services', [FrontendController::class, 'services'])->name('services');

@@ -23,7 +23,7 @@ class DashboardController extends Controller
     /**
      * Show the application dashboard.
      *
-     * @return \Illuminate\Contracts\Support\Renderable
+     * @return mixed
      */
     
     public function index(Request $request)
@@ -33,17 +33,8 @@ class DashboardController extends Controller
 
         // Case: customer role
         if ($roleSlug === 'customer') {
-            // if ($user->customer->hide_dashboard == 0) {
-            //     return view('admin.hide-dashboard');
-            // }
-
-            // Only this customer's records
-            $customers = Customer::where('id', $user->customer->id)->get();
-            $users = collect(); // no need to show other users
-        }
-
-        // Case: admin/superadmin
-        else {
+            return redirect('homepage');
+        } else {
             $customers = Customer::all();
             $users = User::where('role_id', 2)->get();
         }

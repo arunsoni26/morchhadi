@@ -32,11 +32,11 @@ class LoginController extends Controller
         if ($user->role->slug === 'superadmin') {
             return '/admin/dashboard';
         } elseif ($user->role->slug === 'customer') {
-            return '/homepage';
+            return '/';
         }
 
         // Default fallback
-        return '/homepage';
+        return '/';
     }
 
 

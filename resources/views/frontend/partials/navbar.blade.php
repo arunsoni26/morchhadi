@@ -1,10 +1,7 @@
 <nav class="navbar navbar-expand-lg bg-white px-3 py-3 shadow-sm sticky-top">
   <div class="container">
-    <!-- <a class="navbar-brand" href="{{ route('homepage') }}">TeaHouse</a> -->
     <a class="navbar-brand" href="{{ route('homepage') }}">
-        <img src="{{ asset('/img/images/morchhadi-logo-3.png') }}" 
-            alt="{{ config('app.name', 'Laravel') }}" 
-            style="height: 60px;"> 
+      <img src="https://morchhadichai.co.in/public/img/images/morchhadi-logo-3.png" alt="Morchhadi" style="height: 60px;">
     </a>
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
@@ -30,9 +27,6 @@
         </li>
       </ul>
 
-      <form class="d-flex me-3" role="search">
-        <!-- <input id="searchInputNav" class="form-control me-2" type="search" placeholder="Search teas..."> -->
-      </form>
       <div class="d-flex gap-2 align-items-center">
         
         {{-- Show when user is authenticated --}}
@@ -72,14 +66,12 @@
         <a href="{{ route('login') }}" class="btn btn-outline-primary">
           <i class="bi-person-lock"></i>
         </a>
-        <a href="{{ route('register') }}" class="btn btn-primary">
+        <a href="{{ route('register') }}" class="btn btn-outline-secondary">
           <i class="bi bi-person-plus-fill"></i>
         </a>
         @endguest
 
       </div>
-
-
     </div>
   </div>
 </nav>

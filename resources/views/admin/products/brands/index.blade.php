@@ -11,18 +11,20 @@
 <div class="row mb-3">
 </div>
 
-<table id="brandsTable" class="table table-bordered table-striped">
-    <thead>
-        <tr>
-            <th>#</th>
-            <th>Name</th>
-            <th>Slug</th>
-            <th>Description</th>
-            <th>Status</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-</table>
+<div class="table-responsive">
+    <table id="brandsTable" class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Slug</th>
+                <th>Description</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+    </table>
+</div>
 @endsection
 
 
