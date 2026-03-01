@@ -117,8 +117,6 @@ class FrontendController extends Controller
         return view('frontend.product_view', compact('product', 'gallery'));
     }
 
-
-
     public function services()
     {
         return view('frontend.services');
@@ -129,5 +127,15 @@ class FrontendController extends Controller
         $branches = Branch::where('status', 1)->get();
 
         return view('frontend.shops', compact('branches'));
+    }
+
+    public function wholesale()
+    {
+        return view('frontend.wholesale');
+    }
+
+    public function contact()
+    {
+        return view('frontend.contact');
     }
 }

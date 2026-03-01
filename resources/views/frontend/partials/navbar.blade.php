@@ -14,16 +14,23 @@
           <a class="nav-link {{ request()->routeIs('homepage') ? 'active' : '' }}" href="{{ route('homepage') }}">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link {{ request()->routeIs('products') ? 'active' : '' }}" href="{{ route('products') }}">Products</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link {{ request()->routeIs('shop') ? 'active' : '' }}" href="{{ route('shop') }}">Shops</a>
-        </li>
-        <li class="nav-item">
           <a class="nav-link {{ request()->routeIs('about') ? 'active' : '' }}" href="{{ route('about') }}">About Us</a>
         </li>
         <li class="nav-item">
+          <a class="nav-link {{ request()->routeIs('products') ? 'active' : '' }}" href="{{ route('products') }}">Products</a>
+        </li>
+        <!-- <li class="nav-item">
+          <a class="nav-link {{ request()->routeIs('shop') ? 'active' : '' }}" href="{{ route('shop') }}">Shops</a>
+        </li> -->
+        
+        <!-- <li class="nav-item">
           <a class="nav-link {{ request()->routeIs('services') ? 'active' : '' }}" href="{{ route('services') }}">Services</a>
+        </li> -->
+        <li class="nav-item">
+          <a class="nav-link {{ request()->routeIs('wholesale') ? 'active' : '' }}" href="{{ route('wholesale') }}">Wholesale Inquiry</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {{ request()->routeIs('contact') ? 'active' : '' }}" href="{{ route('contact') }}">Contact Us</a>
         </li>
       </ul>
 
