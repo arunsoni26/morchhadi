@@ -135,5 +135,7 @@ Route::get('/about', [FrontendController::class, 'about'])->name('about');
 Route::get('/products', [FrontendController::class, 'products'])->name('products');
 Route::get('/services', [FrontendController::class, 'services'])->name('services');
 Route::get('/shop', [FrontendController::class, 'shops'])->name('shop');
+Route::get('/wholesale', [FrontendController::class, 'wholesale'])->name('wholesale');
+Route::get('/contact', [FrontendController::class, 'contact'])->name('contact');
 
 Route::get('/product/{id}', [FrontendController::class, 'view'])->name('product.view');

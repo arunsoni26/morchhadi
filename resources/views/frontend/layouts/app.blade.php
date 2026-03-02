@@ -4,12 +4,25 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>@yield('title', 'Buy Premium Handpicked Tea Online | Morchadi Chai India')</title>
-  <meta name="description" content="Morchadi offers premium handpicked tea blends sourced from sustainable farms. Experience the joy and calm of authentic tea, freshly packed and delivered to your cup.">
-  <meta name="keywords" content="Morchadi tea, premium tea, chai, herbal tea, Assam tea, Darjeeling tea, best tea India">
+  <meta name="description" content="@yield('meta_description', 'Morchhadi Chai – Premium quality strong tea with rich color and kadak taste. Available for retail and wholesale supply across India.')">
+  <!-- <meta name="description" content="Morchadi offers premium handpicked tea blends sourced from sustainable farms. Experience the joy and calm of authentic tea, freshly packed and delivered to your cup."> -->
+  <meta name="keywords" content="Morchadi tea, Premium Tea in India, Strong Tea Patti, Wholesale Tea Supplier, Kadak Chai Brand, Bulk Tea Supply">
   <meta name="author" content="Morchadi Tea">
   <meta name="robots" content="index, follow">
   <meta name="google-site-verification" content="jXQlBnZKzws11fwIVANk-SKLgIhmrMTbZvjYReBjlBU" />
-  <link rel="canonical" href="https://morchhadichai.co.in/">
+
+  <meta property="og:title" content="@yield('title', 'Morchhadi Chai India')">
+  <meta property="og:description" content="@yield('meta_description')">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="{{ url()->current() }}">
+  <meta property="og:image" content="{{ asset('img/images/morchhadi-logo-2.jpg') }}">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="@yield('title')">
+  <meta name="twitter:description" content="@yield('meta_description')">
+  <meta name="twitter:image" content="{{ asset('img/images/morchhadi-logo-2.jpg') }}">
+
+  <link rel="canonical" href="{{ url()->current() }}">
 
   <link rel="icon" href="https://morchhadichai.co.in/public/img/images/morchhadi-logo-2.jpg" type="image/x-icon">
 
@@ -17,6 +30,24 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 
+  @verbatim
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Morchhadi Chai",
+      "url": "https://morchhadichai.co.in",
+      "logo": "https://morchhadichai.co.in/img/images/morchhadi-logo-2.jpg",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+91-9009733514",
+        "contactType": "customer service",
+        "areaServed": "IN"
+      }
+    }
+  </script>
+  @endverbatim
+  
   <style>
     /* Include your entire CSS here (you can later move this into app.css if needed) */
     body {
@@ -126,6 +157,8 @@
   </div>
 
   <!-- JS -->
+ 
+ 
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script>
