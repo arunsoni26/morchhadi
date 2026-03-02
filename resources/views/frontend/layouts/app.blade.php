@@ -41,7 +41,7 @@
     }
     header.container.hero-section .hero-overlay {
       position: absolute; top: 0; right: 0; width: 40%; height: 100%;
-      background: url('https://morchhadichai.co.in/public/img/products/morchhadi-product.jpg') no-repeat center center;
+      /* background: url('{{ asset('/img/images/banner-1.jpg') }}') no-repeat center center; */
       background-size: cover; opacity: 0.08; pointer-events: none;
     }
     .hero-img { max-height: 350px; object-fit: cover; border-radius: 8px; }

@@ -13,7 +13,7 @@
         <a href="{{ route('products') }}" class="btn btn-primary btn-lg mt-2">Shop Teas</a>
       </div>
       <div class="col-lg-5 col-md-6 col-12 text-center">
-        <img src="{{ asset('img/products/morchhadi-product.jpg') }}" 
+        <img src="{{ asset('img/images/banner-1.jpg') }}" 
              class="img-fluid rounded shadow-sm hero-img" alt="Morchadi premium tea blend packaging">
       </div>
     </div>
@@ -68,24 +68,38 @@
             <div class="card-body d-flex flex-column">
               <h5 class="card-title mb-1">{{ $product->name }}</h5>
               <p class="small text-muted mb-2">{{ $product->description }}</p>
-              <div class="d-flex align-items-center mt-auto"><div class="price">₹ {{ $product->price }}</div><div class="ms-auto d-flex gap-2">
-                <a href="https://wa.me/{{ $product->whatsapp_number }}?text=Hello%20I%20want%20to%20inquire%20about%20{{ urlencode($product->name) }}"
-                  class="btn btn-outline-success btn-sm" target="_blank" title="Chat on WhatsApp">
-                  <i class="bi bi-whatsapp"></i>
-                </a>
+              <div class="d-flex align-items-center mt-auto">
+                <div class="price">
+                  @php
+                    $discountedPrice = $product->price - $product->discount;
+                  @endphp
+                  <span style="text-decoration: line-through; color: #ff0000;">
+                      ₹ {{ number_format($product->price, 2) }}
+                  </span>
+                  <span style="font-weight: bold; color: #000; margin-left: 8px;">
+                      ₹ {{ number_format($discountedPrice, 2) }}
+                  </span>
+                </div>
+                <div class="ms-auto d-flex gap-2">
+                  <a href="https://wa.me/{{ $product->whatsapp_number }}?text=Hello%20I%20want%20to%20inquire%20about%20{{ urlencode($product->name) }}"
+                    class="btn btn-outline-success btn-sm" target="_blank" title="Chat on WhatsApp">
+                    <i class="bi bi-whatsapp"></i>
+                  </a>
 
-                <a href="{{ route('product.view', $product->id) }}" class="btn btn-sm btn-outline-secondary" title="View Product">
-                    View
-                </a>
-                <!-- <button 
-                  class="btn btn-primary btn-sm addToCartBtn"
-                  data-id="{{ $product->id }}"
-                  data-name="{{ $product->name }}"
-                  data-price="{{ $product->price }}"
-                  data-img="{{ asset($product->image) }}"
-                >
-                  Add
-                </button> -->
+                  <a href="{{ route('product.view', $product->id) }}" class="btn btn-sm btn-outline-secondary" title="View Product">
+                      View
+                  </a>
+                  <!-- <button 
+                    class="btn btn-primary btn-sm addToCartBtn"
+                    data-id="{{ $product->id }}"
+                    data-name="{{ $product->name }}"
+                    data-price="{{ $product->price }}"
+                    data-img="{{ asset($product->image) }}"
+                  >
+                    Add
+                  </button> -->
+                </div>
+              </div>
             </div>
           </div>
         </div>
