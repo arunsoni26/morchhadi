@@ -461,10 +461,16 @@
       <div class="product-card p-4 h-100 text-center">
         <img src="{{ $product->image }}" class="img-fluid mb-3">
         <h5>{{ $product->name }}</h5>
-        <p class="small text-muted">{{ $product->description }}</p>
+        <p class="small text-muted">{{ $product->short_description }}</p>
 
         <div class="d-flex justify-content-between align-items-center mt-3">
-          <span class="price">₹ {{ $product->price }}</span>
+          <span class="text-muted text-decoration-line-through small">
+            ₹{{ $product->price }}
+          </span>
+
+          <span class="price ms-2">
+            ₹{{ $product->price - $product->discount_price }}
+          </span>
           <a href="{{ route('product.view', $product->id) }}"
             class="btn btn-premium btn-sm">
             View
