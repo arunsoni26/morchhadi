@@ -464,13 +464,15 @@
         <p class="small text-muted">{{ $product->short_description }}</p>
 
         <div class="d-flex justify-content-between align-items-center mt-3">
-          <span class="text-muted text-decoration-line-through small">
-            ₹{{ $product->price }}
-          </span>
+          <div>
+            <span class="text-muted text-decoration-line-through small">
+              ₹{{ $product->price }}
+            </span>
 
-          <span class="price ms-2">
-            ₹{{ $product->price - $product->discount_price }}
-          </span>
+            <span class="price ms-2">
+              ₹{{ $product->price - $product->discount_price }}
+            </span>
+          </div>
           <a href="{{ route('product.view', $product->id) }}"
             class="btn btn-premium btn-sm">
             View
